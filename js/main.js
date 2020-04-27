@@ -6,21 +6,16 @@ const products = [
 ];
 
 const renderProduct = (title, price) => {
-  return `<div class="product-item">
-            <h3>${title}</h3>
-            <p>${price}</p>
-            <button class="by-btn">Добавить в корзину</button>
+  return `<div class="product__item">
+            <h3 class="product__h3">${title}</h3>
+            <img class = "product__image" src="http://placehold.it/200x120" />
+            <p class="product__price">${price}</p>
+            <button class="button product__addItem">Добавить в корзину</button>
           </div>`;
 };
 
 const renderProducts = (list) => {
-  // const productList = list.map((good) => {
-  //   return renderProduct(good.title, good.price);
-  // });
-  const productList = [];
-  list.forEach(good => {
-    productList.push(renderProduct(good.title, good.price));
-  });
+  const productList = list.map(good => renderProduct(good.title, good.price)).join("");
   console.log(productList);
   document.querySelector('.products').innerHTML = productList;
 };
