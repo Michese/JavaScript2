@@ -5,6 +5,7 @@ class ProductList {
     this.allProducts = [];
     this._fetchProducts();
     this._render();
+    this.priceAllGoods = this._sumPriceGoods();
   }
 
   _fetchProducts() {
@@ -24,6 +25,14 @@ class ProductList {
       this.allProducts.push(productObject);
       block.insertAdjacentHTML('beforeend', productObject.render());
     }
+  }
+
+  _sumPriceGoods() {
+    let result = 0;
+    this.allProducts.forEach(product => {
+      result += product.price;
+    })
+    return result;
   }
 }
 
@@ -46,6 +55,21 @@ class ProductItem {
             </div>`;
   }
 }
+
+class CartList {
+  constructor() {
+  }
+  // Добавить элемент в корзину
+  // Удалить элемент из корзины
+  // отрисовать элементы
+}
+
+class CartItem {
+  constructor() {
+  }
+  // вернуть разметку тегов HTML
+}
+
 new ProductList();
 // const products = [
 //   {id: 1, title: 'Notebook', price: 20000},
