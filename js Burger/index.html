@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/9147614acd.js" crossorigin="anonymous"></script>
+    <script src="burger.js"></script>
+    <title>Burger</title>
+</head>
+<body>
+<form action="#">
+    <div class="burger__item">
+        <h3>Размер бургера</h3>
+        <label for="big">
+            Большой(100 рублей, 40 калорий):
+            <input type="radio" name="size" id="big" value="big" data-price="100" data-calories="40" checked>
+        </label>
+        <label for="small">
+            Маленький(50 рублей, 20 калорий):
+            <input type="radio" name="size" id="small" value="small" data-price="50" data-calories="20">
+        </label>
+    </div>
+
+    <div class="burger__item">
+        <h3>Добавка бургера</h3>
+        <label for="cheese">
+            С сыром(+10 рублей, +20 калорий):
+            <input type="radio" name="add" id="cheese" value="cheese" data-price="10" data-calories="20" checked>
+        </label>
+        <label for="salad">
+            С салатом(+20 рублей, +5 калорий):
+            <input type="radio" name="add" id="salad" value="salad" data-price="20" data-calories="5">
+        </label>
+        <label for="potato">
+            С картофелем(+15 рублей, +10 калорий):
+            <input type="radio" name="add" id="potato" value="potato" data-price="15" data-calories="10">
+        </label>
+    </div>
+
+    <div class="burger__item">
+        <h3>Приправа для бургера</h3>
+        <label for="seasoning">
+            Приправа(+15 рублей, +0 калорий):
+            <input type="checkbox" name="topping" id="seasoning" value="seasoning" data-price="15" data-calories="0">
+        </label>
+        <label for="mayonnaise">
+            Майонез(+20 рублей, +5 калорий).:
+            <input type="checkbox" name="topping" id="mayonnaise" value="mayonnaise" data-price="20" data-calories="5">
+        </label>
+    </div>
+</form>
+<button id="burger__submit">Подтвердить</button>
+<div class="burger__item">
+    <p>Итоговая цена: <span id="burger_price">0</span></p>
+    <p>Всего каллорий: <span id="burger_calories">0</span></p>
+</div>
+</body>
+</html>
