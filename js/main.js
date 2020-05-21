@@ -37,6 +37,7 @@ class ProductList {
 }
 
 class ProductItem {
+
   constructor(product, img = 'https://placehold.it/200x150') {
     this.title = product.title;
     this.price = product.price;
