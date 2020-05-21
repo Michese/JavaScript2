@@ -5,6 +5,7 @@ class ProductList {
     this.allProducts = [];
     this._fetchProducts();
     this._render();
+    this.priceAllGoods = this._sumPriceGoods();
   }
 
   _fetchProducts() {
@@ -25,9 +26,18 @@ class ProductList {
       block.insertAdjacentHTML('beforeend', productObject.render());
     }
   }
+
+  _sumPriceGoods() {
+    let result = 0;
+    this.allProducts.forEach(product => {
+      result += product.price;
+    })
+    return result;
+  }
 }
 
 class ProductItem {
+
   constructor(product, img = 'https://placehold.it/200x150') {
     this.title = product.title;
     this.price = product.price;
@@ -46,6 +56,21 @@ class ProductItem {
             </div>`;
   }
 }
+
+class CartList {
+  constructor() {
+  }
+  // Добавить элемент в корзину
+  // Удалить элемент из корзины
+  // отрисовать элементы
+}
+
+class CartItem {
+  constructor() {
+  }
+  // вернуть разметку тегов HTML
+}
+
 new ProductList();
 // const products = [
 //   {id: 1, title: 'Notebook', price: 20000},
