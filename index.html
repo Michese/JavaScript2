@@ -9,7 +9,24 @@
 <body>
 <header>
     <div class="logo">Интернет-магазин</div>
-    <button class="btn-cart" type="button">Корзина</button>
+    <div class="cart">
+        <button class="btn-cart" type="button">Корзина</button>
+            <div class="cart__div">
+                <table class="cart__table">
+                    <tr>
+                        <td>id</td>
+                        <td>Название</td>
+                        <td>цена</td>
+                        <td>Количество</td>
+                        <td>Удалить</td>
+                    </tr>
+                    <tr class="empty">
+                        <td colspan="4">Пусто</td>
+                    </tr>
+                </table>
+            </div>
+    </div>
+
 </header>
 <main>
     <div class="products"></div>

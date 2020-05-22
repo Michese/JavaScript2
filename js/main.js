@@ -24,11 +24,7 @@ class ProductList {
         this.goods = [];
         this.allProducts = [];
         // this._fetchProducts();
-        this._getProducts()
-            .then(data => {
-                this.goods = [...data];
-                this._render();
-            });
+        this._getProducts();
     }
 
     _fetchProducts() {
@@ -41,6 +37,10 @@ class ProductList {
     _getProducts() {
         fetch(`${API}/catalogData.json`)
             .then(response => response.json())
+            .then(data => {
+                this.goods = [...data];
+                this._render();
+            })
             .catch(error => console.log(error));
     }
 
@@ -73,8 +73,8 @@ class ProductItem {
     }
 
     render() {
-        return `<div class="product-item" data-id="${this.id}">
-                <img src="${this.img}" alt="Some img">
+        return `<div class="product-item" data-id=${this.id_product}>
+                <img src=${this.img} alt="Some img">
                 <div class="desc">
                     <h3>${this.product_name}</h3>
                     <p>${this.price} \u20bd</p>
@@ -85,29 +85,102 @@ class ProductItem {
 }
 
 class CartList {
-    constructor() {
+    constructor(url = `${API}/catalogData.json`, container = '.cart__table') {
+        this.container = container;
+        this.allCartProducts = [];
+        this.goods = [];
+        this._getProducts(url);
+    }
+
+    _getProducts(url) {
+        fetch(url)
+            .then(promise => promise.json())
+            .then(data => {
+                this.goods = [...data];
+                this._getAllProducts();
+            })
+            .catch(error => console.log(error));
+    }
+
+    addCartEl(idProductEl) {
+        this.allCartProducts.forEach(cartProduct => {
+            if (cartProduct.id_product === idProductEl) {
+                const childId = document.querySelector(`td[data-id="${cartProduct.id_product}"]`);
+                if (childId === null) {
+                    ++cartProduct.quantity;
+                    this._renderAdd(cartProduct);
+                } else {
+                    const childQuantity = childId.parentNode.querySelector(`td[data-quantity = "${cartProduct.quantity}"]`);
+                    ++cartProduct.quantity;
+                    ++childQuantity.dataset.quantity;
+                    childQuantity.innerHTML = cartProduct.quantity;
+                }
+            }
+        })
+    }
+
+    removeCartEl(idProductEl) {
 
     }
 
+    _getAllProducts() {
+        this.allCartProducts = this.goods.map(good => new CartItem(good));
+    }
+
+    _renderAdd(cartProduct) {
+        const block = document.querySelector(this.container);
+        block.insertAdjacentHTML("beforeend", cartProduct.render());
+        const empty = document.querySelector('.empty');
+        if (empty !== null) {
+            empty.style.display = 'none';
+        }
+    }
 }
 
 class CartItem extends ProductItem {
     constructor(productItem, img) {
         super(productItem, img)
-        this.quantity = 1;
+        this.quantity = 0;
     }
 
     render() {
         return `<tr>
-            <td>${this.id_product}</td>
-            <td>${this.product_name}</td>
-            <td>${this.price}</td>
-            <td>${this.quantity}</td>
+            <td data-id=${this.id_product}>${this.id_product}</td>
+            <td data-name=${this.product_name}>${this.product_name}</td>
+            <td data-price=${this.price}>${this.price}</td>
+            <td data-quantity=${this.quantity}>${this.quantity}</td>
+            <td class="delete">Del</td>
         </tr>`;
     }
 }
 
-new ProductList();
+function addEventAddButton() {
+    const addToCartButtons = document.querySelectorAll('.buy-btn');
+    setTimeout(
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', event => {
+                const idItem = Number(event.target.parentNode.parentNode.dataset.id);
+                cart.addCartEl(idItem);
+            })
+        })
+        , 500)
+}
+
+window.addEventListener('load', function () {
+    new ProductList();
+    const cart = new CartList();
+    setTimeout(() => {
+    const addToCartButtons = document.querySelectorAll('.buy-btn');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', event => {
+                const idItem = Number(event.target.parentNode.parentNode.dataset.id);
+                cart.addCartEl(idItem);
+            })
+        })}
+        , 500)
+
+})
+
 // const products = [
 //   {id: 1, title: 'Notebook', price: 20000},
 //   {id: 2, title: 'Mouse', price: 1500},
